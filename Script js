@@ -1,0 +1,66 @@
+document.addEventListener("DOMContentLoaded", function () {
+    // Smooth scrolling for navigation links
+    document.querySelectorAll("nav ul li a").forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute("href").substring(1);
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                window.scrollTo({
+                    top: targetSection.offsetTop - 50,
+                    behavior: "smooth"
+                });
+            }
+        });
+    });
+
+    // Form validation
+    document.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
+        
+        if (!name || !email.includes("@") || message.length < 5) {
+            alert("Please enter valid details in all fields.");
+            return;
+        }
+        alert("Message sent successfully!");
+        this.reset();
+    });
+
+    // Interactive team section
+    document.querySelectorAll(".team-card").forEach(card => {
+        card.addEventListener("click", function () {
+            alert(`You clicked on ${this.querySelector("h3").textContent}`);
+        });
+    });
+
+    // Dark mode toggle
+    const toggleButton = document.createElement("button");
+    toggleButton.textContent = "Toggle Dark Mode";
+    toggleButton.style.position = "fixed";
+    toggleButton.style.bottom = "10px";
+    toggleButton.style.right = "10px";
+    document.body.appendChild(toggleButton);
+
+    toggleButton.addEventListener("click", function () {
+        document.body.classList.toggle("dark-mode");
+    });
+
+    // Add dark mode CSS styles
+    const darkModeStyles = document.createElement("style");
+    darkModeStyles.innerHTML = `
+        .dark-mode {
+            background-color: #121212;
+            color: white;
+        }
+        .dark-mode header, .dark-mode footer {
+            background-color: #222;
+        }
+        .dark-mode .team-card {
+            background-color: #333;
+        }
+    `;
+    document.head.appendChild(darkModeStyles);
+});
